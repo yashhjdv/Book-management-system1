@@ -1,0 +1,208 @@
+.modern-header {
+  padding: 2rem 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 20px;
+  margin-bottom: 2rem;
+}
+
+.modern-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.action-buttons .btn-modern {
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loading-state {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.alert-modern {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 4px 20px rgba(220, 53, 69, 0.15);
+}
+
+.book-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  height: 100%;
+}
+
+.book-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.book-card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.book-card-body {
+  padding: 1.5rem;
+}
+
+.book-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.book-author {
+  font-size: 0.9rem;
+  color: #718096;
+}
+
+.book-isbn {
+  font-size: 0.8rem;
+  color: #a0aec0;
+}
+
+.book-actions .btn-modern {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.book-actions .btn-modern:hover {
+  transform: translateY(-1px);
+}
+
+.empty-state {
+  background: rgba(37, 99, 235, 0.02);
+  border-radius: 16px;
+  border: 2px dashed rgba(37, 99, 235, 0.2);
+  transition: all 0.3s ease;
+}
+
+.empty-state:hover {
+  border-color: rgba(37, 99, 235, 0.3);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.empty-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (max-width: 768px) {
+  .modern-title {
+    font-size: 2rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .action-buttons .btn-modern {
+    width: 100%;
+  }
+  
+  .modern-header {
+    text-align: center;
+  }
+}
+
+/* Search Section Styles */
+.search-section {
+  animation: slideDown 0.3s ease;
+}
+
+.search-input-group {
+  position: relative;
+}
+
+.search-input-group .form-control {
+  padding-left: 3rem;
+  padding-right: 3rem;
+  font-size: 1rem;
+  border: 2px solid var(--gray-300);
+  transition: all 0.3s ease;
+}
+
+.search-input-group .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  transform: translateY(-1px);
+}
+
+.search-icon {
+  pointer-events: none;
+  z-index: 10;
+}
+
+.search-stats .badge {
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 20px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced Empty State for Search */
+.empty-state {
+  background: rgba(37, 99, 235, 0.02);
+  border-radius: 16px;
+  border: 2px dashed rgba(37, 99, 235, 0.2);
+  transition: all 0.3s ease;
+}
+
+.empty-state:hover {
+  border-color: rgba(37, 99, 235, 0.3);
+  background: rgba(37, 99, 235, 0.05);
+}
+
+/* Search Results Highlighting */
+.search-highlight {
+  background: rgba(37, 99, 235, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-weight: 600;
+}

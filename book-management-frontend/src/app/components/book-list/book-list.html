@@ -1,0 +1,165 @@
+<div class="container-fluid px-4 py-3">
+  <div class="modern-header d-flex justify-content-between align-items-center mb-4">
+    <div class="header-content">
+      <h1 class="modern-title mb-1">
+        <i class="fas fa-book-open me-2 text-primary"></i>
+        Book Management System
+      </h1>
+      <p class="text-muted mb-0">Manage your book collection with ease</p>
+    </div>
+    <div class="action-buttons">
+      <button class="btn btn-modern btn-success me-2" routerLink="/books/add">
+        <i class="fas fa-plus me-2"></i>Add New Book
+      </button>
+      <button class="btn btn-modern btn-outline-secondary" (click)="logout()">
+        <i class="fas fa-sign-out-alt me-2"></i>Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state text-center py-5">
+    <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <h4 class="text-muted">Loading your books...</h4>
+    <p class="text-muted">Please wait while we fetch your collection</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="alert alert-modern alert-danger">
+    <i class="fas fa-exclamation-triangle me-2"></i>
+    {{ error }}
+    <button class="btn btn-sm btn-modern btn-primary ms-2" (click)="loadBooks()">
+      <i class="fas fa-redo me-1"></i>Retry
+    </button>
+  </div>
+
+  <!-- Success State - Books Content -->
+  <div *ngIf="!loading && !error" class="books-content">
+    <!-- Search Section -->
+    <div class="search-section mb-4">
+      <div class="modern-card">
+        <div class="modern-card-body p-3">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <div class="search-input-group position-relative">
+                <input 
+                  type="text" 
+                  class="form-control form-control-lg ps-5" 
+                  placeholder="Search books by title, author, or ISBN..."
+                  [(ngModel)]="searchQuery"
+                  (input)="onSearchChange(searchQuery)"
+                  style="border-radius: 12px; border: 2px solid #e2e8f0;">
+                <div class="search-icon position-absolute top-50 start-0 translate-middle-y ms-3">
+                  <i class="fas fa-search text-muted"></i>
+                </div>
+                <button 
+                  *ngIf="searchQuery" 
+                  class="btn btn-sm position-absolute top-50 end-0 translate-middle-y me-2"
+                  (click)="clearSearch()"
+                  style="border: none; background: transparent;">
+                  <i class="fas fa-times text-muted"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4 text-end">
+              <div class="search-stats">
+                <span class="badge bg-primary px-3 py-2">
+                  <i class="fas fa-book me-1"></i>
+                  {{ books.length }} book(s) {{ isSearching ? 'found' : 'total' }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modern-card">
+      <div class="modern-card-header">
+        <div class="d-flex align-items-center justify-content-between">
+          <div>
+            <h5 class="mb-0">
+              <i class="fas fa-list me-2"></i>Your Book Collection
+            </h5>
+            <small class="text-muted">
+              {{ isSearching ? `Showing ${books.length} result(s) for "${searchQuery}"` : `${books.length} book(s) in your library` }}
+            </small>
+          </div>
+          <div class="d-flex align-items-center">
+            <span *ngIf="isSearching" class="badge bg-success me-2">
+              <i class="fas fa-search me-1"></i>Search Active
+            </span>
+            <i class="fas fa-filter me-2 text-muted"></i>
+            <small class="text-muted">{{ isSearching ? 'Filtered' : 'All Books' }}</small>
+          </div>
+        </div>
+      </div>
+      <div class="modern-card-body">
+        <div *ngIf="books.length === 0" class="empty-state text-center py-5">
+          <div class="empty-icon mb-3">
+            <i class="fas {{ isSearching ? 'fa-search' : 'fa-book-open' }} fa-4x text-muted opacity-50"></i>
+          </div>
+          <h4 class="text-muted mb-2">
+            {{ isSearching ? 'No books found' : 'No books found' }}
+          </h4>
+          <p class="text-muted mb-4">
+            {{ isSearching ? `No books match your search "${searchQuery}"` : 'Start building your library by adding your first book' }}
+          </p>
+          <div class="d-flex gap-2 justify-content-center">
+            <button *ngIf="isSearching" class="btn btn-modern btn-outline-primary" (click)="clearSearch()">
+              <i class="fas fa-times me-2"></i>Clear Search
+            </button>
+            <button class="btn btn-modern btn-primary" routerLink="/books/add">
+              <i class="fas fa-plus me-2"></i>Add Your First Book
+            </button>
+          </div>
+        </div>
+        
+        <div *ngIf="books.length > 0" class="books-grid">
+          <div class="row g-4">
+            <div class="col-lg-4 col-md-6" *ngFor="let book of books">
+              <div class="book-card">
+                <div class="book-card-header">
+                  <div class="book-icon">
+                    <i class="fas fa-book text-white"></i>
+                  </div>
+                  <div class="book-meta">
+                    <span class="badge bg-light text-dark">{{ book.publicationYear }}</span>
+                  </div>
+                </div>
+                <div class="book-card-body">
+                  <h6 class="book-title">{{ book.title }}</h6>
+                  <p class="book-author text-muted mb-2">
+                    <i class="fas fa-user me-1"></i>{{ book.author }}
+                  </p>
+                  <p class="book-isbn text-muted small mb-3">
+                    <i class="fas fa-barcode me-1"></i>ISBN: {{ book.isbn }}
+                  </p>
+                  <div class="book-actions d-flex gap-2">
+                    <button class="btn btn-sm btn-modern btn-outline-info flex-fill" 
+                            [routerLink]="['/books/detail', book.isbn]"
+                            title="View Details">
+                      <i class="fas fa-eye me-1"></i>View
+                    </button>
+                    <button class="btn btn-sm btn-modern btn-outline-primary" 
+                            [routerLink]="['/books/edit', book.isbn]"
+                            title="Edit Book">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-modern btn-outline-danger" 
+                            (click)="deleteBook(book.isbn)"
+                            title="Delete Book">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

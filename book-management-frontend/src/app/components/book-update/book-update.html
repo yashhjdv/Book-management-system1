@@ -1,0 +1,147 @@
+<div class="container-fluid px-4 py-3">
+  <div class="row justify-content-center">
+    <div class="col-xl-6 col-lg-8 col-md-10">
+      <!-- Back Button -->
+      <div class="mb-4">
+        <button class="btn btn-modern btn-outline-secondary" (click)="cancel()">
+          <i class="fas fa-arrow-left me-2"></i>Back to Books
+        </button>
+      </div>
+
+      <div class="modern-card">
+        <div class="modern-card-header text-center">
+          <div class="header-icon mb-3">
+            <i class="fas fa-edit fa-3x text-white"></i>
+          </div>
+          <h3 class="text-white mb-0">Edit Book</h3>
+          <p class="text-white-50 mb-0">Update book information</p>
+          <div *ngIf="isbn" class="mt-2">
+            <span class="badge bg-white text-primary px-3 py-2">
+              <i class="fas fa-barcode me-2"></i>ISBN: {{ isbn }}
+            </span>
+          </div>
+        </div>
+        
+        <div class="modern-card-body">
+          
+          <!-- Loading state for fetching book details -->
+          <div *ngIf="loadingBook" class="loading-state text-center py-5">
+            <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;">
+              <span class="visually-hidden">Loading book details...</span>
+            </div>
+            <h4 class="text-muted">Loading book details...</h4>
+            <p class="text-muted">Please wait while we fetch the book information</p>
+          </div>
+
+          <!-- Error state -->
+          <div *ngIf="error && !loadingBook" class="alert alert-modern alert-danger">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ error }}
+            <button class="btn btn-sm btn-modern btn-primary ms-2" (click)="loadBook()">
+              <i class="fas fa-redo me-1"></i>Retry
+            </button>
+          </div>
+
+          <!-- Edit form -->
+          <form *ngIf="!loadingBook && !error && book.title" (ngSubmit)="onSubmit()" #bookForm="ngForm" class="modern-form">
+            
+            <div class="form-group mb-4">
+              <label for="isbn" class="form-label">
+                <i class="fas fa-barcode me-2 text-muted"></i>ISBN (Read-only)
+              </label>
+              <input 
+                type="number" 
+                class="form-control form-control-modern" 
+                id="isbn"
+                [value]="book.isbn" 
+                readonly
+                disabled>
+              <small class="form-text text-muted">
+                <i class="fas fa-info-circle me-1"></i>
+                ISBN cannot be changed after creation
+              </small>
+            </div>
+            <div class="form-group mb-4">
+              <label for="title" class="form-label">
+                <i class="fas fa-book me-2 text-primary"></i>Title *
+              </label>
+              <input 
+                type="text" 
+                class="form-control form-control-modern" 
+                id="title"
+                name="title"
+                [(ngModel)]="book.title" 
+                required
+                placeholder="Enter book title"
+                #title="ngModel">
+              <div *ngIf="title.invalid && title.touched" class="invalid-feedback d-block">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Title is required
+              </div>
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="author" class="form-label">
+                <i class="fas fa-user-edit me-2 text-primary"></i>Author *
+              </label>
+              <input 
+                type="text" 
+                class="form-control form-control-modern" 
+                id="author"
+                name="author"
+                [(ngModel)]="book.author" 
+                required
+                placeholder="Enter author name"
+                #author="ngModel">
+              <div *ngIf="author.invalid && author.touched" class="invalid-feedback d-block">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Author is required
+              </div>
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="publicationYear" class="form-label">
+                <i class="fas fa-calendar-alt me-2 text-primary"></i>Publication Year *
+              </label>
+              <input 
+                type="number" 
+                class="form-control form-control-modern" 
+                id="publicationYear"
+                name="publicationYear"
+                [(ngModel)]="book.publicationYear" 
+                required
+                placeholder="Enter publication year"
+                min="1000"
+                max="2024"
+                #publicationYear="ngModel">
+              <div *ngIf="publicationYear.invalid && publicationYear.touched" class="invalid-feedback d-block">
+                <i class="fas fa-exclamation-circle me-1"></i>
+                Publication Year is required
+              </div>
+            </div>
+
+            <div *ngIf="error" class="alert alert-modern alert-danger mb-4">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              {{ error }}
+            </div>
+
+            <div class="form-actions d-flex gap-3">
+              <button type="button" class="btn btn-modern btn-outline-secondary flex-fill" (click)="cancel()">
+                <i class="fas fa-times me-2"></i>Cancel
+              </button>
+              <button 
+                type="submit" 
+                class="btn btn-modern btn-primary flex-fill" 
+                [disabled]="loading || bookForm.invalid">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!loading" class="fas fa-save me-2"></i>
+                {{ loading ? 'Updating...' : 'Update Book' }}
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="container-fluid px-4 py-3">
+  <div class="row justify-content-center">
+    <div class="col-xl-8 col-lg-10">
+      <!-- Back Button -->
+      <div class="mb-4">
+        <button class="btn btn-modern btn-outline-secondary" (click)="goBack()">
+          <i class="fas fa-arrow-left me-2"></i>Back to Book List
+        </button>
+      </div>
+
+      <div class="modern-card">
+        <!-- Loading state -->
+        <div *ngIf="loading" class="loading-state text-center py-5">
+          <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading book details...</span>
+          </div>
+          <h4 class="text-muted">Loading book details...</h4>
+          <p class="text-muted">Please wait while we fetch the book information</p>
+        </div>
+
+        <!-- Error state -->
+        <div *ngIf="error && !loading" class="alert alert-modern alert-danger m-4">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          {{ error }}
+          <button class="btn btn-sm btn-modern btn-primary ms-2" (click)="loadBook()">
+            <i class="fas fa-redo me-1"></i>Retry
+          </button>
+        </div>
+
+        <!-- Book details - show when loaded successfully -->
+        <div *ngIf="!loading && !error && book" class="book-detail-content">
+          <div class="book-detail-header">
+            <div class="row align-items-center">
+              <div class="col-md-8">
+                <div class="book-title-section">
+                  <h1 class="book-title mb-2">{{ book.title }}</h1>
+                  <h2 class="book-author text-muted mb-3">
+                    <i class="fas fa-user me-2"></i>by {{ book.author }}
+                  </h2>
+                  <div class="book-meta d-flex flex-wrap gap-3">
+                    <span class="badge bg-primary">
+                      <i class="fas fa-barcode me-1"></i>
+                      ISBN: {{ book.isbn }}
+                    </span>
+                    <span class="badge bg-success">
+                      <i class="fas fa-calendar me-1"></i>
+                      Published: {{ book.publicationYear }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 text-center">
+                <div class="book-visual">
+                  <div class="book-icon-large">
+                    <i class="fas fa-book-open"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="book-detail-body">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <i class="fas fa-info-circle text-primary"></i>
+                  </div>
+                  <div class="detail-content">
+                    <h6 class="detail-title">Book Information</h6>
+                    <div class="detail-list">
+                      <div class="detail-item">
+                        <span class="detail-label">Title:</span>
+                        <span class="detail-value">{{ book.title }}</span>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-label">Author:</span>
+                        <span class="detail-value">{{ book.author }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="detail-card">
+                  <div class="detail-icon">
+                    <i class="fas fa-database text-success"></i>
+                  </div>
+                  <div class="detail-content">
+                    <h6 class="detail-title">Publication Details</h6>
+                    <div class="detail-list">
+                      <div class="detail-item">
+                        <span class="detail-label">ISBN:</span>
+                        <span class="detail-value">{{ book.isbn }}</span>
+                      </div>
+                      <div class="detail-item">
+                        <span class="detail-label">Year:</span>
+                        <span class="detail-value">{{ book.publicationYear }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="book-detail-actions">
+            <div class="d-flex gap-3 justify-content-center">
+              <button class="btn btn-modern btn-outline-secondary" (click)="goBack()">
+                <i class="fas fa-arrow-left me-2"></i>Back to List
+              </button>
+              <button class="btn btn-modern btn-primary" (click)="editBook()">
+                <i class="fas fa-edit me-2"></i>Edit Book
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

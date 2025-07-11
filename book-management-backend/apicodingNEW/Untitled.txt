@@ -1,0 +1,44 @@
+✅ 1. Add a new book (POST)
+URL: http://localhost:8082/books
+Method: POST
+Body (JSON):
+
+json
+Copy
+Edit
+{
+  "isbn": 101,
+  "title": "The Alchemist",
+  "author": "Paulo Coelho",
+  "publicationYear": 1988
+}
+✅ 2. Get all books (GET)
+URL: http://localhost:8082/books/all
+Method: GET
+
+✅ 3. Get a book by ISBN (GET)
+URL: http://localhost:8082/books/101
+(Replace 101 with the actual ISBN you want to fetch)
+Method: GET
+
+✅ 4. Update a book (PUT)
+URL: http://localhost:8082/books/101
+(Replace 101 with the actual ISBN)
+Method: PUT
+Body (JSON):
+
+json
+Copy
+Edit
+{
+  "title": "The Alchemist - Updated",
+  "author": "Paulo Coelho",
+  "publicationYear": 1990
+}
+✅ 5. Delete a book (DELETE)
+URL: http://localhost:8082/books/101
+(Replace 101 with the ISBN you want to delete)
+Method: DELETE
+
+
+http://localhost:8082/swagger-ui/index.html#/
